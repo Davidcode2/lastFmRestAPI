@@ -1,0 +1,16 @@
+{
+  "name": "lastfmrestapi",
+  "version": "1.0.0",
+  "description": "search for artist on lastfm and write results to csv file",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "ts-node ./src/index.ts"
+  },
+  "author": "Jakob Lingel",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
