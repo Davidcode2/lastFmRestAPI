@@ -23,6 +23,8 @@
     "webpack-dev-server": "^4.10.1"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.27.2",
     "css-loader": "^6.7.1",
     "date-fns": "^2.29.2",
     "style-loader": "^3.3.1"

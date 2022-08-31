@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export class ArtistData {
 
+  artistMatches = null;
   API_KEY: string = "e127749bf371f1ce1ed7da239ed7b5ec";
 
   signIn() {
@@ -12,15 +13,7 @@ export class ArtistData {
       });
   }
 
-  getArtist(name: string) {
-    axios
-      .get(`http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${name}&api_key=${this.API_KEY}&format=json`)
-      .then(res => {
-        console.log(`statusCode: ${res.status}`);
-        console.log(res.data.results.artistmatches);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  async getArtists(name: string) {
+    return axios.get(`http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${name}&api_key=${this.API_KEY}&format=json`)
   }
 }

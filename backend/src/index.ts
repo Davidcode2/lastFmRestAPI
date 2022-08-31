@@ -18,10 +18,15 @@ class Program {
     this.app.get('/', (req, res) => {
       res.send("works");
     });
-    this.app.get('/api/search-artist', (req, res) => {
+    this.app.get('/api/search-artist', (req, response) => {
       let artist = req.query.artist;
-      res.json(this.artistData.getArtist(artist as any));
-      console.log(req);
+      Promise.all([this.artistData.getArtists(artist as any)])
+      .then(res => {
+         response.send(res[0].data.results.artistmatches);
+      })
+      .catch(error => {
+        console.error(error);
+      });
     });
     this.app.listen(Program.PORT, function() {
       console.log(`Node server is running on ${Program.PORT}`);
