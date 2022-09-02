@@ -1,0 +1,13 @@
+output {
+  display: grid;
+  grid-template-columns: 3;
+  grid-template-rows: auto;
+}
+
+.card {
+  /*border: 1px solid lightgrey;*/
+  box-shadow: 2px 4px 16px lightgrey/*rgba(0,0,0,.06)*/;
+  border-radius: 4px;
+  width: auto;
+  padding: 16px;
+}
