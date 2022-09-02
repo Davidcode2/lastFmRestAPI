@@ -1,13 +1,93 @@
-output {
+@font-face {
+	font-family: 'SourceSansPro-Regular';
+	src: url('fonts/SourceSansPro-Regular.ttf');
+}
+
+:root {
+  --main-button-color: white;
+}
+
+* {
+	padding: 0px;
+	margin: 0px;
+	font-family: 'SourceSansPro-Regular';
+	box-sizing: border-box;
+}
+
+html {
+	background-image: url('img/wallhaven-733m1y.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+  background-size: cover;
+}
+
+h1 {
+  margin: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+input {
+	border: none;
+	border: 1px solid lightgrey;
+	height: 30px;
+	border-radius: 5px;
+	padding: 0 0 0 8px;
+}
+
+input:hover {
+	border: none;
+	border: 1px solid lightgreen;
+	box-shadow: 1px 1px 5px lightgrey;
+}
+
+button {
+	border: none;
+	border-radius: 5px;
+	font-size: 12px;
+	font-weight: bold;
+	color: var(--main-button-color);
+	padding: 12px 40px;
+	background-color: darkslateblue;
+	text-align: center;
+}
+
+button:hover {
+	cursor: pointer;
+	box-shadow: 1px 1px 10px lightgrey;
+}
+
+
+.search {
+  margin: 50px 0px 50px ;
+  display: flex;
+  justify-content: center;
+}
+
+#artist-name {
+  margin-right: 5px;
+  padding: 19px;
+}
+
+.saveCsv {
+  display: flex;
+  justify-content: center;
+}
+
+.output {
   display: grid;
-  grid-template-columns: 3;
-  grid-template-rows: auto;
+  grid: 1fr 4fr 1fr / 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 15px;
+  margin: 50px;
 }
 
 .card {
   /*border: 1px solid lightgrey;*/
   box-shadow: 2px 4px 16px lightgrey/*rgba(0,0,0,.06)*/;
+  background-color: rgba(189,133,243,0.4);
   border-radius: 4px;
+  display: grid;
   width: auto;
   padding: 16px;
 }
