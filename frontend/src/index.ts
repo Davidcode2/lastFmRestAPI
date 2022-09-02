@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { Csv } from './csv';
 import './style.css'
 
-class Search {
+class App {
 
-  output = document.querySelector(".output");
-  searchButton = document.querySelector(".searchButton");
+  private output = document.querySelector(".output");
+  private searchButton = document.querySelector(".searchButton");
 
   callback() {
     let searchArgument = document.querySelector("input")!.value;
@@ -19,6 +20,13 @@ class Search {
         this.renderArtists(artists);
         console.log(artists);
       });
+  }
+
+  onSubmit() {
+    let form = document.querySelector("form");
+    form.onSubmit = function() {
+      console.log("submitted");
+    }
   }
 
   clearOutput() {
@@ -57,5 +65,5 @@ class Search {
   }
 }
 
-let app = new Search();
+let app = new App();
 app.start();
