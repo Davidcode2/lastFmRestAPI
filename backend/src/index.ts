@@ -15,18 +15,16 @@ class Program {
   start() {
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
-    this.app.get('/', (req, res) => {
-      res.send("works");
-    });
-    this.app.get('/api/search-artist', (req, response) => {
+
+    this.app.get('/api/get', (req, response) => {
       let artist = req.query.artist;
       Promise.all([this.artistData.getArtists(artist as any)])
-      .then(res => {
-         response.send(res[0].data.results.artistmatches);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+        .then(res => {
+          response.send(res[0].data.results.artistmatches);
+        })
+        .catch(error => {
+          console.error(error);
+        });
     });
     this.app.listen(Program.PORT, function() {
       console.log(`Node server is running on ${Program.PORT}`);

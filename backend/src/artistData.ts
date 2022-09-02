@@ -14,6 +14,7 @@ export class ArtistData {
   }
 
   async getArtists(name: string) {
-    return axios.get(`http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${name}&api_key=${this.API_KEY}&format=json`)
+    console.log(name);
+    return axios.get(`http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${name}&api_key=${this.API_KEY}&format=json`);
   }
 }
