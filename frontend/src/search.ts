@@ -13,7 +13,7 @@ export class Search {
       .get(apiString)
       .then(res => {
         this.artists = this.extractArtists(res);
-        console.log(artists);
+        //console.log(this.artists);
       });
   }
 

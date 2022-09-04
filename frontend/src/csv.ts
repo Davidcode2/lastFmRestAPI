@@ -1,39 +1,74 @@
 import axios from 'axios';
+import { Artists } from './artists';
 
-export class Csv {
+export class Save {
 
-  private artists;
-  private saveButton = document.querySelector(".save");
+  private artists: Artists;
+  private saveButton: HTMLAnchorElement = document.querySelector(".saveButton");
 
-  constructor(artists) {
-    artists;
+  constructor(artists: Artists) {
+    this.artists = artists;
   }
 
-  callback() {
-    let path = this.getFilePath();
-    let apiString = `/api/save`;
-    console.log(apiString);
-    axios
-      .post(apiString, this.artists);
+  start() {
+    //this.getFilePath();
+    this.createButton(this.saveArtists);
+  }
+
+  saveArtists() {
+    //  let path = this.getFilePath();
+    let artistValues = this.artistValues();
+    let headerArray = this.makeHeaderArray();
+    let csv = this.formatCsv(headerArray, ",", artistValues);
+    this.download(csv);
   }
 
   createButton(callback: Function) {
     if (this.saveButton) {
+      //let fileContent = this.artists.Artists;
       this.saveButton.addEventListener('click', callback.bind(this));
     }
   }
 
-  download(data, filename, type) {
-    var file = new Blob([data], { type: type });
-    var fileContent = "My epic novel that I don't want to lose.";
-    var bb = new Blob([fileContent], { type: 'text/plain' });
-    var a = document.createElement('a');
-    a.download = 'download.txt';
-    a.href = window.URL.createObjectURL(bb);
-    a.click();
+  formatCsv(arrayHeader, delimiter, arrayData) {
+    let header = arrayHeader.join(delimiter) + '\n';
+    let csv = header;
+    arrayData.forEach(array => {
+      csv += array.join(delimiter) + "\n";
+    });
+    return csv;
+  }
+
+  makeHeaderArray() {
+    let artistsRaw = this.artists.Artists;
+    let header = [];
+    return Object.keys(artistsRaw[0]);
+  }
+
+
+  artistValues() {
+    let artistsRaw = this.artists.Artists;
+    let values = [];
+    for (let i = 0; i < artistsRaw.length; i++) {
+     values.push(Object.values(artistsRaw[i]));
+    }
+    return values;
+  }
+
+  download(data, filename?: string) {
+    let anchor = document.createElement('a');
+    let fileContent = data;
+    var blob = new Blob([fileContent], { type: 'text/csv' });
+    anchor.href = window.URL.createObjectURL(blob);
+    anchor.download = "artists.csv";
+    anchor.click();
   }
 
   getFilePath() {
+    let saveButton = document.querySelector(".saveButton");
+    saveButton.addEventListener('click', () => {
+      let myPrompt = prompt('Enter filepath here');
+    });
     var input = document.createElement('input');
     input.type = 'file';
 

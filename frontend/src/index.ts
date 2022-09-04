@@ -1,13 +1,17 @@
-import { Csv } from './csv';
+import { Save } from './csv';
 import { Artists } from './artists';
 import './style.css'
 
 class App {
 
-  private artists = new Artists();
+  constructor(
+    private artists = new Artists(),
+    private save = new Save(artists),
+  ) { }
 
   start() {
     this.artists.start();
+    this.save.start();
   }
 
 }

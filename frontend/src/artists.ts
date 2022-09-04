@@ -4,6 +4,7 @@ export class Artists {
 
   private output = document.querySelector(".output");
   private searchButton = document.querySelector(".searchButton");
+  private artists;
 
   start() {
     this.createButton(this.getArtists);
@@ -24,10 +25,10 @@ export class Artists {
     axios
       .get(apiString)
       .then(res => {
-        let artists = this.extractArtists(res);
+        this.artists = this.extractArtists(res);
         this.clearOutput();
-        this.renderArtists(artists);
-        console.log(artists);
+        this.renderArtists(this.artists);
+        console.log(this.artists);
       });
   }
 
@@ -64,5 +65,9 @@ export class Artists {
       card.appendChild(p);
     }
     this.output.appendChild(card);
+  }
+
+  get Artists() {
+    return this.artists;
   }
 }
