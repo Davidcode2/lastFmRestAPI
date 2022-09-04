@@ -58,13 +58,26 @@ export class Artists {
 
   createCardForArtist(artist) {
     let card = document.createElement("div");
+    let textArea = document.createElement("div");
     card.classList.add("card");
+    card.appendChild(textArea);
     for (const [key, value] of Object.entries(artist)) {
       let p = document.createElement("p");
-      p.innerHTML += `${key}: ${value}`;
-      card.appendChild(p);
+      if (key === "image") {
+        this.addImage(value, card);
+      } else {
+        p.innerHTML += `${key}: ${value}`;
+      }
+      textArea.appendChild(p);
     }
+    card.appendChild(textArea);
     this.output.appendChild(card);
+  }
+
+  addImage(value, card) {
+    let img = document.createElement("img");
+    img.src = value[1]["#text"];
+    card.appendChild(img);
   }
 
   get Artists() {

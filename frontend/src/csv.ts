@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Artists } from './artists';
 
 export class Save {
@@ -25,7 +24,7 @@ export class Save {
     let headerArray = this.makeHeaderArray();
     headerArray = this.filterHeaders(this.headerFilter, headerArray);
     let artistValues = this.filterArtistValues(this.headerFilter);
-    let csv = this.formatCsv(headerArray, artistValues, ",");
+    let csv: string = this.formatCsv(headerArray, artistValues, ",");
     this.download(csv);
   }
 
@@ -46,14 +45,14 @@ export class Save {
       for (let header of headerFilter) {
         artist.push(artistsRaw[i][header]);
       }
-      artist.push(this.artistImage(artistsRaw[i], i));
+      artist.push(this.artistImage(artistsRaw[i]));
       values.push(artist);
     }
     console.log(values);
     return values;
   }
 
-  artistImage(artist, i) {
+  artistImage(artist) {
     let small_images = artist.image.filter(image => image.size === "small");
     console.log(small_images);
     if (small_images[0]) {
@@ -72,7 +71,7 @@ export class Save {
     return csv;
   }
 
-  download(data, filename?: string) {
+  download(data: string, filename?: string) {
     let anchor = document.createElement('a');
     let fileContent = data;
     var blob = new Blob([fileContent], { type: 'text/csv' });

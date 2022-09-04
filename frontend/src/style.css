@@ -87,7 +87,19 @@ button:hover {
   box-shadow: 2px 4px 16px lightgrey/*rgba(0,0,0,.06)*/;
   background-color: rgba(189,133,243,0.4);
   border-radius: 4px;
-  display: grid;
+  display: flex;
   width: auto;
   padding: 16px;
+}
+
+.card > img {
+  margin-right: 15px;
+  width: auto;
+  height: 100px;
+}
+
+@media screen and (max-width: 480px) {
+  .output {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
 }
