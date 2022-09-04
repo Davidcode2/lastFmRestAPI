@@ -5,6 +5,7 @@ export class Save {
 
   private artists: Artists;
   private saveButton: HTMLAnchorElement = document.querySelector(".saveButton");
+  private headerFilter = ["name", "mbid", "url"];
 
   constructor(artists: Artists) {
     this.artists = artists;
@@ -17,9 +18,9 @@ export class Save {
 
   saveArtists() {
     //  let path = this.getFilePath();
-    let artistValues = this.artistValues();
+    let artistValues = this.artistValues(this.headerFilter);
     let headerArray = this.makeHeaderArray();
-    let csv = this.formatCsv(headerArray, ",", artistValues);
+    let csv = this.formatCsv(this.headerFilter, headerArray, ",", artistValues);
     this.download(csv);
   }
 
@@ -30,7 +31,8 @@ export class Save {
     }
   }
 
-  formatCsv(arrayHeader, delimiter, arrayData) {
+  formatCsv(headerFilter, arrayHeader, delimiter, arrayData) {
+    arrayHeader = arrayHeader.filter((header) => headerFilter.includes(header));
     let header = arrayHeader.join(delimiter) + '\n';
     let csv = header;
     arrayData.forEach(array => {
@@ -45,13 +47,17 @@ export class Save {
     return Object.keys(artistsRaw[0]);
   }
 
-
-  artistValues() {
+  artistValues(headerFilter) {
     let artistsRaw = this.artists.Artists;
     let values = [];
     for (let i = 0; i < artistsRaw.length; i++) {
-     values.push(Object.values(artistsRaw[i]));
+      let artist = []
+      artist.push(artistsRaw[i].name);
+      artist.push(artistsRaw[i].mbid);
+      artist.push(artistsRaw[i].url);
+      values.push(artist);
     }
+    console.log(values);
     return values;
   }
 
