@@ -12,53 +12,64 @@ export class Save {
   }
 
   start() {
-    //this.getFilePath();
     this.createButton(this.saveArtists);
-  }
-
-  saveArtists() {
-    //  let path = this.getFilePath();
-    let artistValues = this.artistValues(this.headerFilter);
-    let headerArray = this.makeHeaderArray();
-    let csv = this.formatCsv(this.headerFilter, headerArray, ",", artistValues);
-    this.download(csv);
   }
 
   createButton(callback: Function) {
     if (this.saveButton) {
-      //let fileContent = this.artists.Artists;
       this.saveButton.addEventListener('click', callback.bind(this));
     }
   }
 
-  formatCsv(headerFilter, arrayHeader, delimiter, arrayData) {
-    arrayHeader = arrayHeader.filter((header) => headerFilter.includes(header));
+  saveArtists() {
+    let headerArray = this.makeHeaderArray();
+    headerArray = this.filterHeaders(this.headerFilter, headerArray);
+    let artistValues = this.filterArtistValues(this.headerFilter);
+    let csv = this.formatCsv(headerArray, artistValues, ",");
+    this.download(csv);
+  }
+
+  makeHeaderArray() {
+    let artistsRaw = this.artists.Artists;
+    return Object.keys(artistsRaw[0]);
+  }
+
+  filterHeaders(headerFilter: Array<string>, arrayHeader: Array<string>) {
+    return arrayHeader.filter((header) => headerFilter.includes(header));
+  }
+
+  filterArtistValues(headerFilter: Array<string>) {
+    let artistsRaw = this.artists.Artists;
+    let values = [];
+    for (let i = 0; i < artistsRaw.length; i++) {
+      let artist = []
+      for (let header of headerFilter) {
+        artist.push(artistsRaw[i][header]);
+      }
+      artist.push(this.artistImage(artistsRaw[i], i));
+      values.push(artist);
+    }
+    console.log(values);
+    return values;
+  }
+
+  artistImage(artist, i) {
+    let small_images = artist.image.filter(image => image.size === "small");
+    console.log(small_images);
+    if (small_images[0]) {
+      let small_image = small_images[0]["#text"];
+      console.log(small_images[0]["#text"]);
+      return small_image;
+    }
+  }
+
+  formatCsv(arrayHeader: Array<string>, arrayData: any[], delimiter: string) {
     let header = arrayHeader.join(delimiter) + '\n';
     let csv = header;
     arrayData.forEach(array => {
       csv += array.join(delimiter) + "\n";
     });
     return csv;
-  }
-
-  makeHeaderArray() {
-    let artistsRaw = this.artists.Artists;
-    let header = [];
-    return Object.keys(artistsRaw[0]);
-  }
-
-  artistValues(headerFilter) {
-    let artistsRaw = this.artists.Artists;
-    let values = [];
-    for (let i = 0; i < artistsRaw.length; i++) {
-      let artist = []
-      artist.push(artistsRaw[i].name);
-      artist.push(artistsRaw[i].mbid);
-      artist.push(artistsRaw[i].url);
-      values.push(artist);
-    }
-    console.log(values);
-    return values;
   }
 
   download(data, filename?: string) {
@@ -69,20 +80,4 @@ export class Save {
     anchor.download = "artists.csv";
     anchor.click();
   }
-
-  getFilePath() {
-    let saveButton = document.querySelector(".saveButton");
-    saveButton.addEventListener('click', () => {
-      let myPrompt = prompt('Enter filepath here');
-    });
-    var input = document.createElement('input');
-    input.type = 'file';
-
-    input.onchange = e => {
-      //var file = e.target.files[0];
-    }
-
-    input.click();
-  }
-
 }
