@@ -40,6 +40,10 @@ bash ./start.sh
 
 A browser window should open with the program running on port 8080.
 
+# Screenshot
+
+![](screenshot.png)
+
 # notes
 
 Not all the requirements were met:
